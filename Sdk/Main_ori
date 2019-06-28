@@ -1,0 +1,169 @@
+/////////////// MAIN /////////////////
+
+
+
+#ifndef GZ_tLibRT
+	#error Please Include <LibRT.h> before <Main>
+#endif
+
+#ifdef GZ_tMainInclued
+	#error Please include <Main> only once, in your "main" .cpp
+#endif
+#define GZ_tMainInclued
+
+
+gzInt nMainIsAlive = 1;
+gzInt nMainUpdateMs = 16; // (60 fps if available)
+gzInt Main(gzText8 _sArg, gzUIntX _nId = 0, gzInt _nCmd = 0);
+gzInt Update(gzFloat _nDelta = 0);
+gzInt Close(gzInt _nExitCode);
+
+#define endl_cr "\r"
+
+#ifdef GZ_tJit
+
+	extern "C" int Jit_Main(void* _dTest) {
+		nMainIsAlive = Main("");
+		return nMainIsAlive;
+	}
+	
+	extern "C" int Jit_Update() { 
+		if( nMainIsAlive){
+			nMainIsAlive = Update(0);
+		}
+		return nMainIsAlive;
+	}
+
+//#elif defined GZ_tWindows
+#elif defined tPlatform_Windows
+
+	#include <Windows.h>
+	
+
+LRESULT CALLBACK MainHwndProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam){
+ //printf("\nmsg: 0x%03x\n",message );
+  switch (message) { 
+    case WM_CLOSE:
+            DestroyWindow(hwnd);
+        break;
+        case WM_DESTROY:
+            PostQuitMessage(0);
+			nMainIsAlive = 0;	
+        break;
+  
+		case WM_QUIT:
+		case WM_QUERYENDSESSION:
+			nMainIsAlive = 0;	
+            break;
+			
+        default:
+            return DefWindowProc(hwnd, message, wParam, lParam);
+    }
+    return 0;
+}
+
+	#ifdef tPlatform_CpcDos
+	
+#include "Cpcdos/CPC_WPR.cpp"
+extern bool bOnCpcDos;
+int main( int argc, const char* argv[] ){ 
+		if(bOnCpcDos){
+			nMainIsAlive = Main("");
+			while(nMainIsAlive){
+				nMainIsAlive = Update(0);
+			}
+			return nMainIsAlive;
+		}
+		
+	HINSTANCE hThisInstance = GetModuleHandle(NULL);
+	int nCmdShow = 10;//SW_SHOWDEFAULT
+	
+	#else
+int WINAPI WinMain (HINSTANCE hThisInstance,  HINSTANCE hPrevInstance,  LPSTR lpszArgument, int nCmdShow){
+	#endif
+
+	HWND MainEventHwnd; //Create a Dummy Windows to handle main events
+	MSG messages; 
+	static const char* class_name = "LibRT_Class";
+	WNDCLASSEXA wx = {0};
+	wx.cbSize = sizeof(WNDCLASSEXA);
+	wx.lpfnWndProc = MainHwndProcedure;        // function which will handle messages
+	wx.hInstance = hThisInstance;
+	wx.lpszClassName = class_name;
+	if ( RegisterClassEx(&wx) ) {
+	  MainEventHwnd = CreateWindowEx( WS_EX_TOOLWINDOW, class_name, "MainHwnd", 0, 0, 0, 0, 0, HWND_DESKTOP, NULL, hThisInstance, NULL );
+	}
+	ShowWindow(MainEventHwnd, SW_SHOWNOACTIVATE); //Necessary to handle windows events
+		
+	nMainIsAlive = Main("", (gzUIntX)hThisInstance, (gzInt)nCmdShow );	
+
+	while(nMainIsAlive){
+				
+		Sleep(nMainUpdateMs);
+		nMainIsAlive = Update(0);
+
+		while(PeekMessage(&messages, NULL, 0, 0, PM_REMOVE)) {
+			
+			TranslateMessage(&messages);
+			DispatchMessage(&messages);     
+			
+			if(messages.message == WM_QUIT){
+				 nMainIsAlive = 0;
+			}
+		}
+		
+		
+	}
+	
+	return Close(messages.wParam);
+    //return messages.wParam;   //The program return-value is 0 - The value that PostQuitMessage() gave 
+}
+
+	
+#elif defined tPlatform_Web_Emsc ////////////////////// Web //////////////////////////////////////
+
+	#include <emscripten/emscripten.h>
+	#include <emscripten/bind.h>
+
+	#undef endl_cr
+	#define endl_cr "\n"
+	
+	void Emsc_Update(){
+		if(nMainIsAlive){
+			nMainIsAlive = Update(0);
+		}
+	}
+
+	gzInt main(){
+		emscripten_set_main_loop(Emsc_Update, 0, 1);
+		nMainIsAlive = Main("");
+		return nMainIsAlive;
+	}
+	
+	
+
+#elif defined GZ_tCpcDos
+
+	#include "Cpcdos/CPC_WPR.cpp"
+
+	extern "C" int cpc__gze_main() {
+		Main();
+		while( nMainIsAlive){
+			nMainIsAlive = Update(0);
+		}
+		return nMainIsAlive;
+	}
+	
+	
+	
+#else ////// Others //////
+#error
+	int main() {
+		nMainIsAlive = Main("");
+		while(nMainIsAlive){
+			Update(0);
+		}
+		return nMainIsAlive;
+	}
+	
+#endif
