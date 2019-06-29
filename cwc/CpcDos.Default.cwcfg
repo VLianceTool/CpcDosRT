@@ -3,7 +3,8 @@
 <Config>
 	<Platform name="CpcDos" default="true"></Platform>
 	<Require>VLianceTool/LibRT</Require>
-
+	<BinExt>exe</BinExt>
+	
 </Config>
 
 
