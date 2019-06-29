@@ -1,0 +1,25 @@
+﻿<Toolchain> <!-- CpcDos Cwc Config -->
+
+<Config>
+	<Platform name="CpcDos" default="true"></Platform>
+	<Require>VLianceTool/LibRT</Require>
+
+</Config>
+
+
+<Exe>
+
+</Exe>
+
+<Arguments>
+   
+	<Compiler>-DD_Platform_Windows </Compiler> <!-- Can run on both Windows & CpcDos  -->
+	<Compiler>-I"{_pModule}SDK/" </Compiler>
+
+  
+</Arguments>
+
+ 
+ 
+ 
+</Toolchain> <!-- End -->
