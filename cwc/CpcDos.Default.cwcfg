@@ -16,7 +16,8 @@
    
 	<Compiler>-DD_Platform_Windows </Compiler> <!-- Can run on both Windows & CpcDos  -->
 	<Compiler>-I"{_pModule}SDK/" </Compiler>
-
+	
+	<Linker>-Wl,--export-all-symbols</Linker>
   
 </Arguments>
 
