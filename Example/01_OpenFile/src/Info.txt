@@ -1,3 +1,0 @@
-Blablabla voici le contenu du fichier!
-Hop un saut de ligne
-FIN!
