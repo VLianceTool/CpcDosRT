@@ -13,6 +13,27 @@
 #ifndef tHDef_GZ_Types
 #define tHDef_GZ_Types
 
+//From "Lib_GZ.h"
+#ifdef tLibExport_Lib_GZ
+	#define tApi_Lib_GZ __declspec(dllexport)
+#elif tLibImport_Lib_GZ
+	#define tApi_Lib_GZ __declspec(dllimport)
+#else
+	 #define tApi_Lib_GZ
+#endif
+
+
+#define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
+
+
+#define gzMin(a, b) ((a < b) ? a : b)
+#define gzMax(a, b) ((a > b) ? a : b)
+#define gzConcat_(a, b) a##b
+#define gzConcat(a, b) gzConcat_(a, b)
+
+#define gzStringize_(A) #A
+#define gzStringize(A) gzStringize_(A)
+
 
 
 //#include "Lib_GZ/_SysOptions.h"
@@ -25,6 +46,15 @@
 //Secodray keyword Add:
 //gzSCast gzDCast gzCCast gzRCast SpFromThis get
 
+#ifndef NULL_PTR
+	#define NULL_PTR ((void*)0)
+#endif
+#ifndef NULL
+	#define NULL 0
+#endif
+#ifndef NUL
+	#define NUL '\0'
+#endif
 
 #define GZ_Null 0
 
@@ -53,6 +83,7 @@ typedef const wchar_t* gzText16;
 typedef void* gzPtr;
 
 
+
 #ifdef _WIN64
 #define GZ_tSys64
 #endif
@@ -72,7 +103,7 @@ typedef void* gzPtr;
 #endif
 
 #ifdef GZ_tJit
-typedef gzUIntX size_t; 
+typedef gzUIntX size_t;
 #endif
 
 extern "C"  gzInt32 __divdi3(gzInt32 a, gzInt32 b);
@@ -127,18 +158,31 @@ typedef struct  {  //Auto memory management
     gzUInt nNbIns;
 }NbInstaces;
 
+
+typedef gzUInt8 gzUTF8;
+typedef gzUInt16 gzUTF16;
+typedef gzUInt32 gzUTF32;
+
 ////// Default Options //////////
 #ifdef GZ_tDebug
-	
+
 #endif
 #ifdef GZ_tNoTace
-	
+
 #endif
 
 ////////////////////////////////
 
-namespace Lib_GZ{class cDelegate;};
-typedef Lib_GZ::cDelegate* gzAny;
+//namespace Lib_GZ{class cDelegate;};
+//typedef Lib_GZ::cDelegate* gzAny;
+
+namespace Lib_GZ{namespace Base{class cClass;}}
+//typedef Lib_GZ::Base::cClass* gzAny;
+typedef Lib_GZ::Base::cClass* gzClass;
+struct gzAny{};
+
+
+
 
 //struct gzDelegateClass { Lib_GZ::Delegate* oClass;};
 //typedef void* gzDlgWrap;
@@ -161,8 +205,9 @@ namespace Lib_GZ{ struct uLib; namespace Lib{extern gzUInt nClass;  extern  uLib
 #define GZ_FuncWrapM gzDlgWrapM* _w
 #define GZ_PARAM
 
-#define zNull 0
-
+#ifndef zNull
+	#define zNull ((void *)0)
+#endif
 
 #define tApi_GZ
 #ifdef tLibExport_GZ
@@ -178,7 +223,7 @@ namespace Lib_GZ{ struct uLib; namespace Lib{extern gzUInt nClass;  extern  uLib
 #define tApi_Demo
 
 //No atomic val in monothreaded
-#ifndef GZ_tMonothread
+#ifndef GZ_D_Monothread
 	#define GZ_tAtomic
 #endif
 
@@ -207,16 +252,16 @@ namespace Lib_GZ{
 #ifdef GZ_tExtCrash
 	extern "C" void DbgCrash(gzPtr* _pStackArray, gzUInt _pStackIndex );
 	#define GZ_Crash() DbgCrash(gzaCallStack, gznCallStackIndex);
-	
+
 #else
-	#define GZ_Crash()
+	#define GZ_Crash() DbgCrash();
 #endif
 
-#define GZ_tHaveCallStack
+//#define GZ_tHaveCallStack
 
 //Must be power of 2
 #ifndef GZ_tCallStackSize
-	#define GZ_tCallStackSize 1024 
+	#define GZ_tCallStackSize 1024
 #endif
 
 
@@ -228,7 +273,7 @@ struct gzFuncStack{void* oClass; const char* cName; };
 
 	extern gzPtr gzaCallStack[GZ_tCallStackSize];
 	extern gzUInt gznCallStackIndex;
-	
+
 //	#include <stdio.h>
 	struct gzStack {
 		gzStack(gzPtr _pStFunc) {
@@ -243,9 +288,30 @@ struct gzFuncStack{void* oClass; const char* cName; };
 	//12 bit for idClass ->  4096 class
 	//10 bit for idFunc  ->  1024 Function
 	#define gz_(_pStFunc) gzStack gz_s(  &_::zFuncName[_pStFunc] );
-	
+
 #else
 	#define gz_(_pStFunc)
 #endif
 
+namespace Lib_GZ_OpenGL{
+class csOpenGL;
+}
+extern Lib_GZ_OpenGL::csOpenGL* oMainOGL;
+
+
+#define GzInst Get(GzThread)
+
+
+
+
+//Unroll
+#define Pragma_Unroll_2 _Pragma("unroll 2")
+#define Pragma_Unroll_4 _Pragma("unroll 4")
+#define Pragma_Unroll_6 _Pragma("unroll 6")
+#define Pragma_Unroll_8 _Pragma("unroll 8")
+#define Pragma_Unroll_16 _Pragma("unroll 16")
+
+
+typedef void* ArrayPtr;//Temp?
+	
 #endif

@@ -12,7 +12,7 @@
 
 extern "C" {
 	extern gzInt nMainIsAlive; //Default 1 (Alive)
-	extern gzInt nMainUpdateMs; //Default 16 (~60 fps if available)
+	//extern gzInt nMainUpdateMs; //Default 16 (~60 fps if available)
 }
 
 

@@ -12,13 +12,13 @@
 	#error Please Include <GZE.h> before <Main>
 #endif
 
-#ifdef GZ_tMainInclued
+#ifdef GZ_D_MainInclued
 	#error Please include <Main> only once, in your "main" .cpp
 #endif
-#define GZ_tMainInclued
+#define GZ_D_MainInclued
 
 
-#include "Lib_GZ/Base/Thread/Thread.h" //Temp
+//#include "Lib_GZ/Base/Thread/Thread.h" //Temp
 
 	
 //////// Include base of GZE //////////
@@ -36,11 +36,12 @@
 
 
 
-
+gzInt GZ_nArrayTotalAlloc = 0;
 gzInt nMainIsAlive = 1;
 gzInt nMainUpdateMs = 16; // (60 fps if available)
+
 gzInt Main(gzText8 _sArg, gzUIntX _nId = 0, gzInt _nCmd = 0);
-gzInt Update(gzFloat _nDelta = 0);
+gzInt Update();
 gzInt Close(gzInt _nExitCode);
 
 #define endl_cr "\r"
@@ -55,7 +56,7 @@ gzInt Close(gzInt _nExitCode);
 
 	extern "C" int Jit_Update() {
 		if( nMainIsAlive){
-			nMainIsAlive = Update(0);
+			nMainIsAlive = Update();
 		}
 		return nMainIsAlive;
 	}
@@ -97,15 +98,18 @@ LRESULT CALLBACK MainHwndProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARA
     return 0;
 }
 
-	#ifdef D_Platform_CpcDos
+
+#ifdef D_Platform_CpcDos
+		#define D_GZE_CPP_ONLY
+		
 //////////////////////////////////////////////////////////
-#include "Lib_GZ/SysUtils/CpcDos/CPC_WPR.cpp"
+#include "CpcDos/CPC_WPR.cpp"
 extern bool bOnCpcDos;
 int main( int argc, const char* argv[] ){
 	if(bOnCpcDos){
 		nMainIsAlive = Main("");
 		while(nMainIsAlive){
-			nMainIsAlive = Update(0);
+			nMainIsAlive = Update();
 		}
 		return nMainIsAlive;
 	}
@@ -139,14 +143,13 @@ SetConsoleOutputCP(CP_UTF8);
 	}
 	ShowWindow(MainEventHwnd, SW_SHOWNOACTIVATE); //Necessary to handle windows events
 	
-	Lib_GZ::Lib::fLoadAllLib();
-	
+
 	#ifndef D_GZE_CPP_ONLY
-	Lib_GZ::Lib::fLoadLib(IniLib_Lib_GzWindows());
-	//Lib_GZ::Lib::fIniClassLib(IniLib_Lib_GzWindows()); //Todo generic, not only windows..
-	Lib_GZ::Base::Thread::Thread::bAppIsAlive = true;
+		Lib_GZ::Lib::fLoadAllLib();
+		Lib_GZ::Lib::fLoadLib(IniLib_Lib_GzWindows());
+		//Lib_GZ::Lib::fIniClassLib(IniLib_Lib_GzWindows()); //Todo generic, not only windows..
+		Lib_GZ::Base::Thread::Thread::bAppIsAlive = true;
 	#endif
-	
 
 	
 	nMainIsAlive = Main("", (gzUIntX)hThisInstance, (gzInt)nCmdShow );
@@ -156,7 +159,7 @@ SetConsoleOutputCP(CP_UTF8);
 	while(nMainIsAlive){
 		fflush(stdout);
 		Sleep(nMainUpdateMs);
-		nMainIsAlive = Update(0);
+		nMainIsAlive = Update();
 		
 		#ifdef D_GZE_CPP_ONLY
 		//Minimal msg handle
@@ -202,7 +205,7 @@ SetConsoleOutputCP(CP_UTF8);
 				 FPSMeter.call<void>("tickStart");
 			}
 
-			nMainIsAlive = Update(0);
+			nMainIsAlive = Update();
 
 			if(!FPSMeter.isUndefined()){
 				FPSMeter.call<void>("tick");
@@ -237,7 +240,7 @@ SetConsoleOutputCP(CP_UTF8);
 		Lib_GZ::Lib::fLoadAllLib();
 		Main();
 		while( nMainIsAlive){
-			nMainIsAlive = Update(0);
+			nMainIsAlive = Update();
 		}
 		return nMainIsAlive;
 	}
@@ -247,11 +250,11 @@ SetConsoleOutputCP(CP_UTF8);
 #else ////// Others //////
 
 	int main() {
-		Lib_GZ::Lib::fLoadAllLib();
-		Lib_GZ::Lib::fLoadLib(IniLib_Lib_GzWindows()); //OverPlace
+		//Lib_GZ::Lib::fLoadAllLib();
+		//Lib_GZ::Lib::fLoadLib(IniLib_Lib_GzWindows()); //OverPlace
 		nMainIsAlive = Main("");
 		while(nMainIsAlive){
-			Update(0);
+			Update();
 		}
 		return nMainIsAlive;
 	}
@@ -263,6 +266,7 @@ SetConsoleOutputCP(CP_UTF8);
 #endif
 struct End { //Place before any global strurt to be sure it was called after everything, note this may not be called at the every end, this can be a false negative
   ~End(){
+	  /*
 	  	printf("\nTotal: Alloc / Free   ---  %d / %d ", GZ_nArrayTotalAlloc, GZ_nArrayTotalFree);
 		if(GZ_nArrayTotalAlloc == GZ_nArrayTotalFree){
 			printf("\nP: *-- No memory leak --* \n");
@@ -270,6 +274,7 @@ struct End { //Place before any global strurt to be sure it was called after eve
 			printf("\n\nE:---!!! MEMORY BROKEN !!!---\n\n");
 		}
 	  printf("\n--- End! ---");
+	  */
 	  /*
 	  #ifndef  D_Platform_Web_Emsc
 	  getch();
