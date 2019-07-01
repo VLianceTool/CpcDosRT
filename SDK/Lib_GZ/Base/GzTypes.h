@@ -10,6 +10,10 @@
 
 
 
+#include <stdbool.h> //Bool for compilation in C lang (Todo, Is required?)
+
+
+
 #ifndef tHDef_GZ_Types
 #define tHDef_GZ_Types
 
@@ -45,6 +49,9 @@
 
 //Secodray keyword Add:
 //gzSCast gzDCast gzCCast gzRCast SpFromThis get
+
+
+
 
 #ifndef NULL_PTR
 	#define NULL_PTR ((void*)0)
@@ -106,7 +113,7 @@ typedef void* gzPtr;
 typedef gzUIntX size_t;
 #endif
 
-extern "C"  gzInt32 __divdi3(gzInt32 a, gzInt32 b);
+//extern "C"  gzInt32 __divdi3(gzInt32 a, gzInt32 b);
 
 
 #define GZ_nMaxInt32 0x7FFFFFFF
@@ -176,9 +183,12 @@ typedef gzUInt32 gzUTF32;
 //namespace Lib_GZ{class cDelegate;};
 //typedef Lib_GZ::cDelegate* gzAny;
 
+#ifdef __cplusplus
 namespace Lib_GZ{namespace Base{class cClass;}}
 //typedef Lib_GZ::Base::cClass* gzAny;
 typedef Lib_GZ::Base::cClass* gzClass;
+#endif
+
 struct gzAny{};
 
 
@@ -199,7 +209,9 @@ struct gzComp{void* oClass; gzPtrFunc fCall; };
 //extern Lib_GZ::cDelegate* GZ_NullObj;
 #define GZ_NullObj 0
 
+#ifdef __cplusplus
 namespace Lib_GZ{ struct uLib; namespace Lib{extern gzUInt nClass;  extern  uLib* rLastLib;}};
+#endif
 
 #define GZ_FuncWrapD gzDlgWrapD*
 #define GZ_FuncWrapM gzDlgWrapM* _w
@@ -293,11 +305,12 @@ struct gzFuncStack{void* oClass; const char* cName; };
 	#define gz_(_pStFunc)
 #endif
 
+#ifdef __cplusplus
 namespace Lib_GZ_OpenGL{
 class csOpenGL;
 }
 extern Lib_GZ_OpenGL::csOpenGL* oMainOGL;
-
+#endif
 
 #define GzInst Get(GzThread)
 

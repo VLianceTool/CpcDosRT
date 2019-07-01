@@ -1,4 +1,4 @@
-# Compiled Object files
+ # Compiled Object files
 *.slo
 *.lo
 *.o
@@ -35,7 +35,6 @@
 *.zip
 
 # Directory
-bin/
 obj/
 
 *.wdat
