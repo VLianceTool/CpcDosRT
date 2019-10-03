@@ -13,9 +13,9 @@
 #include <stdbool.h> //Bool for compilation in C lang (Todo, Is required?)
 
 
-
 #ifndef tHDef_GZ_Types
-#define tHDef_GZ_Types
+#ifndef tHDef_GZ_Types_
+#define tHDef_GZ_Types_
 
 //From "Lib_GZ.h"
 #ifdef tLibExport_Lib_GZ
@@ -327,4 +327,5 @@ extern Lib_GZ_OpenGL::csOpenGL* oMainOGL;
 
 typedef void* ArrayPtr;//Temp?
 	
+#endif
 #endif

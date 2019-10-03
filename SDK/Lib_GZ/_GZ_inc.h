@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Base/GzTypes.h"
+#include "Base/_GzTypes.h"
 	
 /*
 //////TEMP DEBUG MODE
