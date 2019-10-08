@@ -41,6 +41,11 @@
 	CpcdosOSx_CPintiCore* CpcDos = &CpcDosHolder;
 	
 	
+	////int  my_printf( const char * format, ... );
+	////#define  printf my_printf 
+
+	
+
 	FUNC_cpc_Creer_Contexte 				cpc_Creer_Contexte 				= 0;
 	FUNC_cpc_Obtenir_Zone_Contexte 			cpc_Obtenir_Zone_Contexte 		= 0;
 	FUNC_cpc_Blitter 						cpc_Blitter 					= 0;
@@ -75,7 +80,7 @@
 		
 	};
 
-
+/*
 	#ifdef GZ_tOverplace
 		#include <string.h>
 		#include "Lib_GZ/GZ.h"
@@ -100,7 +105,7 @@
 			return true;
 		}
 	#endif
-	
+	*/
 	
 	int nCpcVerMajor = 0;
 	int nCpcVerMinor = 0;

@@ -76,8 +76,8 @@ extern "C" void 			cpc_Set_Version				(int _nCpcVerMajor, int _nCpcVerMinor);
 	#endif
 
 	//extern "C" FUNC_ STDCALL GetProcAddress(void* hModule, char* lpProcName); //*Wrap over standard windows function (from dll on windows)*
+//	int  my_printf( const char * format, ... );
 
-	
 	typedef 	int 			(*FUNC_cpc_Creer_Contexte)				(int TAILLEX, int TAILLEYn); 					extern FUNC_cpc_Creer_Contexte 				cpc_Creer_Contexte;
 	typedef 	void* 			(*FUNC_cpc_Obtenir_Zone_Contexte)		(int ID); 										extern FUNC_cpc_Obtenir_Zone_Contexte 		cpc_Obtenir_Zone_Contexte;
 	typedef 	int 			(*FUNC_cpc_Blitter)						(int ID); 										extern FUNC_cpc_Blitter 					cpc_Blitter;
