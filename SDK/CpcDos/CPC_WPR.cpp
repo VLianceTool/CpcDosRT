@@ -106,15 +106,6 @@
 		}
 	#endif
 	*/
-	
-	int nCpcVerMajor = 0;
-	int nCpcVerMinor = 0;
-	void cpc_Set_Version(int _nCpcVerMajor, int _nCpcVerMinor)
-	{
-		nCpcVerMajor = _nCpcVerMajor;
-		nCpcVerMinor = _nCpcVerMinor;
-	}
-
 	#undef NELEMS
 	#define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 
@@ -136,7 +127,20 @@
 		}
 		return false;
 	}
-	bool bOnCpcDos = fIniCpcDosFunctions();
+	//bool bOnCpcDos = fIniCpcDosFunctions();
+	
+	int nCpcVerMajor = 0;
+	int nCpcVerMinor = 0;
+	bool bOnCpcDos = false;
+	void cpc_Set_Version(int _nCpcVerMajor, int _nCpcVerMinor)
+	{
+		nCpcVerMajor = _nCpcVerMajor;
+		nCpcVerMinor = _nCpcVerMinor;
+		bOnCpcDos = fIniCpcDosFunctions();
+	}
+
+
+
 
 #endif
 

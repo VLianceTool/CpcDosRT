@@ -1,0 +1,11 @@
+;Register Cwc before using a .cwmake
+>
+-{_sOpt}="O2"
+>
+-{_wToolchain}= VLianceTool/CpcDosRT
+>
+-c StartFile/ -o obj/
+>
+;Generate executable
+ -o obj/ -#To _start_.a 
+> 

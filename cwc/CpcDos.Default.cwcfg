@@ -13,12 +13,23 @@
 </Exe>
 
 <Arguments>
-   
+  	<!--  <Compiler>-Weverything </Compiler> -->
+
+ 	 <Compiler>-Werror=return-type</Compiler>
+ 
+	 <!-- Disable CRT, Static Initialiser mess -->
+	 <Compiler>-Wglobal-constructors </Compiler>
+	 <Compiler>-Wexit-time-destructors </Compiler>
+	 <Compiler>-Werror=global-constructors </Compiler>
+	 <Compiler>-Werror=exit-time-destructors </Compiler>
    
 	<Compiler>-DD_Platform_Windows </Compiler> <!-- Can run on both Windows & CpcDos  -->
 	<Compiler>-I"{_pModule}SDK/" </Compiler>
 	
-	<Linker>-Wl,--export-all-symbols</Linker>
+	<!-- <Linker>-L"{_pModule}Lib/" -l_start_ </Linker> -->
+	<Linker_Lib> -lstdc++ -lgdi32 -luser32 -lkernel32 -lmsvcrt  </Linker_Lib> 
+	
+	<Linker>-Wl,--export-all-symbols -nodefaultlibs -nostartfiles   </Linker>
   
 </Arguments>
 
