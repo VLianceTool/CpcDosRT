@@ -27,9 +27,12 @@
 	<Compiler>-I"{_pModule}SDK/" </Compiler>
 	
 	<!-- <Linker>-L"{_pModule}Lib/" -l_start_ </Linker> -->
-	<Linker_Lib> -lstdc++ -lgdi32 -luser32 -lkernel32 -lmsvcrt  </Linker_Lib> 
+	<Linker_Lib> -lgdi32 -luser32 </Linker_Lib> 
 	
-	<Linker>-Wl,--export-all-symbols -nodefaultlibs -nostartfiles   </Linker>
+	<Linker>-Wl,--export-all-symbols </Linker>
+  
+    <!-- 	<Linker> -nodefaultlibs -nostartfiles </Linker>  -->
+  	<!-- 	<Linker_Lib> -lgdi32 -luser32  -lkernel32 -lmsvcrt </Linker_Lib>          -->
   
 </Arguments>
 

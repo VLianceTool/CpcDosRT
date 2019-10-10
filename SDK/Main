@@ -74,7 +74,7 @@ gzInt Close(gzInt _nExitCode);
 	#include <fcntl.h>
 
 	#include <Windows.h>
-	#include <locale.h> //Console
+//	#include <locale.h> //Console
 
 LRESULT CALLBACK MainHwndProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam){
  //printf("\nmsg: 0x%03x\n",message );
@@ -105,14 +105,36 @@ LRESULT CALLBACK MainHwndProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARA
 //////////////////////////////////////////////////////////
 #include "CpcDos/CPC_WPR.cpp"
 extern bool bOnCpcDos;
+extern int nCpcVerMajor;
+extern int nCpcVerMinor;
 int main( int argc, const char* argv[] ){
+	
+	
+	puts("\nCPC Dos Main\n"); 
+	printf("\n---------\n"); 
+
+	if(bOnCpcDos){
+		printf("CpcDos ver%d.%d ", nCpcVerMajor, nCpcVerMinor);
+		nMainIsAlive = Main("");
+		while(nMainIsAlive){
+			nMainIsAlive = Update();
+		}
+		return nMainIsAlive;
+	}else{
+		printf("--On Windows --- ");
+		setbuf(stdout, NULL);
+	}
+	
+	/*
 	if(bOnCpcDos){
 		nMainIsAlive = Main("");
 		while(nMainIsAlive){
 			nMainIsAlive = Update();
 		}
 		return nMainIsAlive;
-	}
+	}else{
+		setbuf(stdout, NULL);
+	}*/
 
 HINSTANCE hThisInstance = GetModuleHandle(NULL);
 int nCmdShow = 10;//SW_SHOWDEFAULT
@@ -121,10 +143,14 @@ int nCmdShow = 10;//SW_SHOWDEFAULT
 //////////////////////////////////////////////////////////
 int WINAPI WinMain (HINSTANCE hThisInstance,  HINSTANCE hPrevInstance,  LPSTR lpszArgument, int nCmdShow){
 SetConsoleOutputCP(CP_UTF8);
+	setbuf(stdout, NULL);
 //////////////////////////////////////////////////////////
 	#endif
 	
-	setbuf(stdout, NULL);
+	
+
+	
+	
 	
 	GZ_nArrayTotalAlloc = 0;
 	
@@ -157,7 +183,7 @@ SetConsoleOutputCP(CP_UTF8);
 	
 	
 	while(nMainIsAlive){
-		fflush(stdout);
+		//fflush(stdout); //Bug on CpcDos
 		Sleep(nMainUpdateMs);
 		nMainIsAlive = Update();
 		
@@ -180,7 +206,7 @@ SetConsoleOutputCP(CP_UTF8);
 	
 	
 	int _nClose = Close(messages.wParam);
-	fflush(stdout);
+	//fflush(stdout); //Bug on CpcDos
 	return _nClose;
     //return messages.wParam;   //The program return-value is 0 - The value that PostQuitMessage() gave
 }
