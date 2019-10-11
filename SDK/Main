@@ -103,15 +103,38 @@ LRESULT CALLBACK MainHwndProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARA
 		#define D_GZE_CPP_ONLY
 		
 //////////////////////////////////////////////////////////
+int _nTest = 7;
 #include "CpcDos/CPC_WPR.cpp"
 extern bool bOnCpcDos;
 extern int nCpcVerMajor;
 extern int nCpcVerMinor;
-int main( int argc, const char* argv[] ){
+extern "C" int cpc_main( int argc, const char* argv[] ){
+		puts("\cpc_main Dos Main\n"); 
+	printf("\n---------\n"); 
+	_nTest++;
+	printf("\n_nTest: %d \n", _nTest); 
 	
+	if(bOnCpcDos){
+		printf("CpcDos ver%d.%d ", nCpcVerMajor, nCpcVerMinor);
+	}else{
+		printf("--On Windows-- ");
+	}
+	nMainIsAlive = Main("");
+	while(nMainIsAlive){
+		nMainIsAlive = Update();
+	}
+	return nMainIsAlive;
+
+}
+
+
+int main( int argc, const char* argv[] ){
+
 	
 	puts("\nCPC Dos Main\n"); 
 	printf("\n---------\n"); 
+	_nTest++;
+	printf("\n_nTest: %d \n", _nTest); 
 
 	if(bOnCpcDos){
 		printf("CpcDos ver%d.%d ", nCpcVerMajor, nCpcVerMinor);

@@ -23,7 +23,7 @@
 	 <Compiler>-Werror=global-constructors </Compiler>
 	 <Compiler>-Werror=exit-time-destructors </Compiler>
    
-	<Compiler>-DD_Platform_Windows </Compiler> <!-- Can run on both Windows & CpcDos  -->
+	<Compiler>-DD_Platform_Windows -DGZ_D_Monothread</Compiler> <!-- Can run on both Windows & CpcDos  -->
 	<Compiler>-I"{_pModule}SDK/" </Compiler>
 	
 	<!-- <Linker>-L"{_pModule}Lib/" -l_start_ </Linker> -->
