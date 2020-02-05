@@ -1,0 +1,1 @@
+vmware-mount.exe Z: "PUBLIC Cpcdos OSx-disk1.vmdk" /m:w
