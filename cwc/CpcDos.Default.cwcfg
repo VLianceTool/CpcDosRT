@@ -2,7 +2,7 @@
 
 <Config>
 	<Platform name="CpcDos" default="true"></Platform>
-	<Require>VLianceTool/LibRT</Require>
+	<Require>VLianceTool/LibRT[Clang]</Require>
 	<BinExt>exe</BinExt>
 	
 </Config>
@@ -21,7 +21,7 @@
 	 <Compiler>-Wglobal-constructors </Compiler>
 	 <Compiler>-Wexit-time-destructors </Compiler>
 	 <Compiler>-Werror=global-constructors </Compiler>
-	 <Compiler>-Werror=exit-time-destructors </Compiler>
+	 <Compiler>-Wexit-time-destructors </Compiler>
    
 	<Compiler>-DD_Platform_Windows -DGZ_D_Monothread</Compiler> <!-- Can run on both Windows & CpcDos  -->
 	<Compiler>-I"{_pModule}SDK/" </Compiler>

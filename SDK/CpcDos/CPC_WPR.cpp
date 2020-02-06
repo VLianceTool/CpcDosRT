@@ -109,6 +109,13 @@
 	#undef NELEMS
 	#define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 
+	
+	void* fDymmyFunc(){
+		printf("\nCall CpcFunc");
+		return 0;
+	}
+	
+	
 	bool fIniCpcDosFunctions()
 	{
 		#ifdef GZ_tOverplace
@@ -118,6 +125,10 @@
 		if(nCpcVerMajor > 0){ //We are on CpcDos
 			for(unsigned int i = 0; i < NELEMS(CpcDosFuncTable); i++ ){
 				*CpcDosFuncTable[i].dFunc =  (FUNC_) GetProcAddress(0, (char*)CpcDosFuncTable[i].sFuncName);		
+			}
+		}else{ //We simulate CPC_Dos
+			for(unsigned int i = 0; i < NELEMS(CpcDosFuncTable); i++ ){
+				*CpcDosFuncTable[i].dFunc =  (FUNC_) &fDymmyFunc;		
 			}
 		}
 
