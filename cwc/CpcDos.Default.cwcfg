@@ -15,7 +15,7 @@
 <Arguments>
   	<!--  <Compiler>-Weverything </Compiler> -->
 
- 	 <Compiler>-Werror=return-type</Compiler>
+ <!--	 <Compiler>-Werror=return-type</Compiler> -->
  
 	 <!-- Disable CRT, Static Initialiser mess -->
 	 <Compiler>-Wglobal-constructors </Compiler>
