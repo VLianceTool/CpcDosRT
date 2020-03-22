@@ -13,6 +13,9 @@
 </Exe>
 
 <Arguments>
+
+	<Compiler>-DD_Render_100_Frames</Compiler> <!-- Temp, just for tests -->
+	
   	<!--  <Compiler>-Weverything </Compiler> -->
 
  <!--	 <Compiler>-Werror=return-type</Compiler> -->
@@ -24,6 +27,7 @@
 	 <Compiler>-Wexit-time-destructors </Compiler>
    
 	<Compiler>-DD_Platform_Windows -DGZ_D_Monothread</Compiler> <!-- Can run on both Windows & CpcDos  -->
+
 	<Compiler>-I"{_pModule}SDK/" </Compiler>
 	
 	<!-- <Linker>-L"{_pModule}Lib/" -l_start_ </Linker> -->
