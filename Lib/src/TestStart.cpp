@@ -226,7 +226,7 @@ extern "C" int entry(int argc, char **argv)
 	return 0;
 }
 */
-/*
+
 extern "C" int __main(int argc, char **argv){
 		printf("\n--__main--");
 		return 0;
@@ -238,4 +238,4 @@ extern "C" int main(int argc, char **argv)
 	cpc_main(argc, argv);
 
 	return 0;
-}*/
+}

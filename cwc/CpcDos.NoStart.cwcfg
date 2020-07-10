@@ -31,7 +31,7 @@
 	<Compiler>-I"{_pModule}SDK/" </Compiler>
 	
 	
-	<Linker>{_pModule}Lib/StartFile/_start_.o</Linker>
+	<Linker>{_pModule}Lib/StartFile/_start_.o  -nodefaultlibs  -nostdlib   -nostartfiles  -lmsvcrt </Linker>
 		
 	<!-- <Linker>-L"{_pModule}Lib/" -l_start_ </Linker> -->
 	<Linker_Lib> -lgdi32 -luser32 </Linker_Lib> 

@@ -1,0 +1,10 @@
+;Build Main
+-c src/ -o objstd/cpp_{_sPlatform}_{_sOpt}/ 
+>
+;Copy resource files
+-#Copy Rc/ _out/{_sPlatform}_{_sOpt}/
+>
+;Generate executable
+ -o objstd/cpp_{_sPlatform}_{_sOpt}/ -#To  _out/{_sPlatform}_{_sOpt}/App.* 
+>  
+-#Run
