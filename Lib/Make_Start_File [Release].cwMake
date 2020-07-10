@@ -4,8 +4,8 @@
 >
 -{_wToolchain}= VLianceTool/CpcDosRT
 >
--c StartFile/ -o obj/
+-c StartFile/ -o StartFile/
 >
 ;Generate executable
- -o obj/ -#To _start_.a 
+;-o obj/ -#To _start_.a 
 > 

@@ -5,8 +5,9 @@
 -#Copy Rc/ _out/{_sPlatform}_{_sOpt}/
 >
 ;Generate executable
- -o obj/cpp_{_sPlatform}_{_sOpt}/ -#To _out/{_sPlatform}_{_sOpt}/App.*  -Xlinker -Map=output.map  
-> 
+ -o obj/cpp_{_sPlatform}_{_sOpt}/ -#To _out/{_sPlatform}_{_sOpt}/App.* -nodefaultlibs  -nostdlib   -nostartfiles  -lmsvcrt
+>  
 -#Run
 ;-Wl,-eentry ;-nodefaultlibs  -nostdlib  -nostartfiles  -nostartfiles   -lgcc
 ;-nodefaultlibs  -nostdlib   -nostartfiles  -lmsvcrt
+; -Xlinker -Map=output.map 
