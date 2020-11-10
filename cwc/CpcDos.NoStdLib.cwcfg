@@ -37,7 +37,7 @@
 	<Linker_Lib> -lgdi32 -luser32 </Linker_Lib> 
 	
 
-	<Linker>-Wl,--export-all-symbols </Linker>
+	<Linker>-Wl,--export-all-symbols -fPIC </Linker>
   
     <!-- 	<Linker> -nodefaultlibs -nostartfiles </Linker>  -->
   	<!-- 	<Linker_Lib> -lgdi32 -luser32  -lkernel32 -lmsvcrt </Linker_Lib>          -->
